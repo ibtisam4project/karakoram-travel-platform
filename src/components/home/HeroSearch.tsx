@@ -109,7 +109,7 @@ export function HeroSearch() {
           <span>Curated Expeditions Across Pakistan &amp; Beyond</span>
         </div>
 
-        {/* Headline with Bricolage Grotesque display font */}
+        {/* Headline with Fraunces / Playfair Display font */}
         <h1
           ref={headlineRef}
           className="text-4xl sm:text-6xl md:text-7xl font-display font-bold text-white tracking-tight leading-[1.08] max-w-4xl drop-shadow-md"

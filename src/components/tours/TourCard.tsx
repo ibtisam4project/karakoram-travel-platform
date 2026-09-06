@@ -28,7 +28,7 @@ interface TourCardProps {
  * - Graceful image fallback
  * - Pakistani Rupee (PKR) price formatting with discount badge
  * - Wishlist heart toggle with interactive visual feedback
- * - Bricolage Grotesque display typography and deep navy / terracotta accents
+ * - Fraunces / Playfair Display typography and deep navy / terracotta accents
  */
 export const TourCard: React.FC<TourCardProps> = ({
   tour,
@@ -172,7 +172,7 @@ export const TourCard: React.FC<TourCardProps> = ({
             </div>
           </div>
 
-          {/* Title with Bricolage Grotesque font */}
+          {/* Title with Fraunces / Playfair Display font */}
           <Link to={`/tours/${tour.slug}`} className="block group-hover:underline">
             <h3 className="font-display text-xl font-bold text-foreground leading-snug group-hover:text-editorial-terracotta transition-colors line-clamp-2">
               {tour.title}

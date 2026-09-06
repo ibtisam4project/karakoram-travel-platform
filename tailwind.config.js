@@ -70,9 +70,9 @@ export default {
         "3xl": "1.5rem",
       },
       fontFamily: {
-        display: ["'Bricolage Grotesque'", "sans-serif"],
-        serif: ["'Playfair Display'", "Georgia", "serif"],
-        sans: ["'Plus Jakarta Sans'", "Inter", "sans-serif"],
+        display: ["'Fraunces'", "'Playfair Display'", "Georgia", "serif"],
+        serif: ["'Fraunces'", "'Playfair Display'", "Georgia", "serif"],
+        sans: ["'Inter'", "-apple-system", "BlinkMacSystemFont", "sans-serif"],
       },
       boxShadow: {
         subtle: "0 2px 10px 0 rgba(11, 59, 75, 0.05)",
