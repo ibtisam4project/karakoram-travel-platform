@@ -1,3 +1,4 @@
+import { Reveal } from "@/lib/animation"
 import React, { useState, useMemo } from "react"
 import {
   ArrowUpDown,

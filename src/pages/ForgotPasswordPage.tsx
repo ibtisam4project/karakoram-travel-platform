@@ -1,4 +1,5 @@
-import React, { useState } from "react"
+import { Reveal, useMagneticButton } from "@/lib/animation"
+import React, { useState, useRef } from "react"
 import { Link } from "react-router-dom"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
@@ -17,6 +18,8 @@ const forgotSchema = z.object({
 type ForgotFormData = z.infer<typeof forgotSchema>
 
 export function ForgotPasswordPage() {
+  const submitBtnRef = useRef<HTMLButtonElement>(null)
+  useMagneticButton(submitBtnRef, { strength: 0.25 })
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [errorMessage, setErrorMessage] = useState<string | null>(null)
   const [isSent, setIsSent] = useState(false)

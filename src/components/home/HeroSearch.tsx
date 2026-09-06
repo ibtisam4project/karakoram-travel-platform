@@ -4,7 +4,7 @@ import { MapPin, Calendar, Users, Search, Sparkles, ShieldCheck } from "lucide-r
 import { supabase } from "@/lib/supabaseClient"
 import { Destination } from "@/types/database"
 import { Button } from "@/components/ui/button"
-import { gsap, ScrollTrigger, prefersReducedMotion, useMagneticButton } from "@/lib/gsap"
+import { useParallax, useSplitTextReveal, useMagneticButton } from "@/lib/animation"
 
 export function HeroSearch() {
   const navigate = useNavigate()
@@ -19,7 +19,7 @@ export function HeroSearch() {
   const headlineRef = useRef<HTMLHeadingElement | null>(null)
   const subtitleRef = useRef<HTMLParagraphElement | null>(null)
   const searchBoxRef = useRef<HTMLDivElement | null>(null)
-  const searchButtonRef = useMagneticButton<HTMLButtonElement>(0.28)
+  const searchButtonRef = useRef<HTMLButtonElement | null>(null)
 
   useEffect(() => {
     async function fetchDestinations() {
@@ -34,45 +34,10 @@ export function HeroSearch() {
     fetchDestinations()
   }, [])
 
-  // GSAP ScrollTrigger Parallax & Entrance Timeline
-  useEffect(() => {
-    if (prefersReducedMotion()) return
-
-    const ctx = gsap.context(() => {
-      // 1. Genuine ScrollTrigger-driven Parallax (background moves slower than foreground)
-      if (bgImageRef.current && sectionRef.current) {
-        gsap.to(bgImageRef.current, {
-          yPercent: 28,
-          scale: 1.15,
-          ease: "none",
-          scrollTrigger: {
-            trigger: sectionRef.current,
-            start: "top top",
-            end: "bottom top",
-            scrub: true,
-          },
-        })
-      }
-
-      // 2. Staggered Entrance Reveal
-      const tl = gsap.timeline({ defaults: { ease: "power3.out" } })
-      
-      if (pillRef.current) {
-        tl.from(pillRef.current, { opacity: 0, y: -20, duration: 0.6 })
-      }
-      if (headlineRef.current) {
-        tl.from(headlineRef.current, { opacity: 0, y: 35, duration: 0.8 }, "-=0.3")
-      }
-      if (subtitleRef.current) {
-        tl.from(subtitleRef.current, { opacity: 0, y: 25, duration: 0.7 }, "-=0.4")
-      }
-      if (searchBoxRef.current) {
-        tl.from(searchBoxRef.current, { opacity: 0, y: 30, scale: 0.96, duration: 0.8 }, "-=0.4")
-      }
-    }, sectionRef)
-
-    return () => ctx.revert()
-  }, [])
+  // Signature animation hooks from internal animation toolkit
+  useParallax(bgImageRef, { speed: 28, scale: 1.18, start: "top top", end: "bottom top" })
+  useSplitTextReveal(headlineRef, { type: "words", duration: 0.8, delay: 0.15 })
+  useMagneticButton(searchButtonRef, { strength: 0.3, scale: 1.03 })
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault()

@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from "react"
+import { useSplitTextReveal, Reveal, useMagneticButton } from "@/lib/animation"
+import React, { useEffect, useState, useRef } from "react"
 import { useParams, Link, useNavigate, useLocation } from "react-router-dom"
 import {
   Clock,
@@ -38,6 +39,10 @@ import { Label } from "@/components/ui/label"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 
 export function TourDetailPage() {
+  const titleRef = useRef<HTMLHeadingElement>(null)
+  const bookNowBtnRef = useRef<HTMLButtonElement>(null)
+  useSplitTextReveal(titleRef, { type: "words", duration: 0.7, delay: 0.1 })
+  useMagneticButton(bookNowBtnRef, { strength: 0.28, scale: 1.03 })
   const { slug } = useParams<{ slug: string }>()
   const navigate = useNavigate()
   const location = useLocation()
@@ -309,7 +314,7 @@ export function TourDetailPage() {
                 </span>
               </div>
 
-              <h1 className="text-3xl sm:text-5xl font-display font-bold text-foreground tracking-tight leading-tight">
+              <h1 ref={titleRef} className="text-3xl sm:text-5xl font-display font-bold text-foreground tracking-tight leading-tight">
                 {tour.title}
               </h1>
             </div>
@@ -385,6 +390,7 @@ export function TourDetailPage() {
 
               {/* Tab 1: Overview */}
               <TabsContent value="overview" className="pt-6 space-y-6">
+                <Reveal options={{ y: 20, duration: 0.5 }}>
                 <div className="prose dark:prose-invert max-w-none text-muted-foreground leading-relaxed text-sm sm:text-base">
                   <p>{tour.description}</p>
                   <p className="pt-2">
@@ -400,11 +406,14 @@ export function TourDetailPage() {
                     <li>Cash withdrawal points are sparse past Gilgit/Skardu; carry adequate PKR currency.</li>
                   </ul>
                 </div>
+              </Reveal>
               </TabsContent>
 
               {/* Tab 2: Vertical Itinerary Timeline */}
               <TabsContent value="itinerary" className="pt-6 space-y-4">
-                <ItineraryTimeline itinerary={tour.itinerary} />
+                <Reveal options={{ y: 20, duration: 0.5 }}>
+                  <ItineraryTimeline itinerary={tour.itinerary} />
+                </Reveal>
               </TabsContent>
 
               {/* Tab 3: Full Live Availability Calendar */}
@@ -660,6 +669,7 @@ export function TourDetailPage() {
 
               {/* Book Now Button (Uiverse-adapted Primary Editorial Style) */}
               <button
+                ref={bookNowBtnRef}
                 type="button"
                 onClick={handleBookNow}
                 disabled={!selectedAvailability || selectedAvailability.status !== "open"}

@@ -1,4 +1,5 @@
-import React, { useState } from "react"
+import { Reveal, useMagneticButton } from "@/lib/animation"
+import React, { useState, useRef } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
@@ -33,6 +34,8 @@ const registerSchema = z
 type RegisterFormData = z.infer<typeof registerSchema>
 
 export function RegisterPage() {
+  const submitBtnRef = useRef<HTMLButtonElement>(null)
+  useMagneticButton(submitBtnRef, { strength: 0.25 })
   const navigate = useNavigate()
   const { signUp } = useAuth()
   const [errorMessage, setErrorMessage] = useState<string | null>(null)
@@ -235,6 +238,7 @@ export function RegisterPage() {
             </div>
 
             <Button
+              ref={submitBtnRef}
               type="submit"
               variant="editorial"
               disabled={isSubmitting}

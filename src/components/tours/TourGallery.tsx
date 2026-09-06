@@ -1,3 +1,5 @@
+import { useRef } from "react"
+import { useParallax } from "@/lib/animation"
 import React, { useState } from "react"
 import { Maximize2 } from "lucide-react"
 
@@ -7,6 +9,8 @@ interface TourGalleryProps {
 }
 
 export function TourGallery({ images, title }: TourGalleryProps) {
+  const heroImageRef = useRef<HTMLImageElement>(null)
+  useParallax(heroImageRef, { speed: 15, scale: 1.08 })
   const fallback = "/images/tours/hunza_valley_autumn_1788431904215.jpg"
   const galleryImages = images && images.length > 0 ? images : [fallback]
   const [selectedImage, setSelectedImage] = useState<string>(galleryImages[0])
@@ -17,9 +21,10 @@ export function TourGallery({ images, title }: TourGalleryProps) {
       {/* 1. Main Highlight Image */}
       <div className="relative aspect-[16/9] sm:aspect-[21/9] w-full rounded-3xl overflow-hidden shadow-card group bg-muted">
         <img
+          ref={heroImageRef}
           src={selectedImage}
           alt={title}
-          className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-102"
+          className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-102 will-change-transform"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent pointer-events-none" />
 

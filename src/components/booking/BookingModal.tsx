@@ -1,4 +1,5 @@
-import React, { useState } from "react"
+import { useMagneticButton } from "@/lib/animation"
+import React, { useState, useRef } from "react"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import * as z from "zod"
@@ -77,6 +78,8 @@ export function BookingModal({
   const [isProcessing, setIsProcessing] = useState(false)
   const [bookingRef, setBookingRef] = useState<string>("")
   const [confirmedBookingId, setConfirmedBookingId] = useState<string>("")
+  const stepForwardBtnRef = useRef<HTMLButtonElement>(null)
+  useMagneticButton(stepForwardBtnRef, { strength: 0.25 })
 
   const effectivePrice = tour.discount_price ?? tour.price
   const totalPrice = effectivePrice * travelersCount
@@ -247,7 +250,7 @@ export function BookingModal({
                 <Button variant="ghost" onClick={onClose}>
                   Cancel
                 </Button>
-                <Button variant="editorial" onClick={() => setStep(2)} className="gap-2">
+                <Button ref={stepForwardBtnRef} variant="editorial" onClick={() => setStep(2)} className="gap-2">
                   <span>Enter Traveler Details</span>
                   <ArrowRight className="w-4 h-4" />
                 </Button>

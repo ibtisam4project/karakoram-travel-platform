@@ -1,6 +1,6 @@
-import React, { useEffect, useRef, useState } from "react"
+import React, { useRef } from "react"
 import { TrendingUp, TrendingDown, LucideIcon } from "lucide-react"
-import { gsap, prefersReducedMotion } from "@/lib/gsap"
+import { useCountUp } from "@/lib/animation"
 
 interface KpiCardProps {
   title: string
@@ -14,29 +14,6 @@ interface KpiCardProps {
   formatter?: (val: number) => string
 }
 
-function AnimatedNumber({ value, formatter }: { value: number; formatter?: (val: number) => string }) {
-  const [displayValue, setDisplayValue] = useState(0)
-  const counterRef = useRef({ val: 0 })
-
-  useEffect(() => {
-    if (prefersReducedMotion()) {
-      setDisplayValue(value)
-      return
-    }
-
-    gsap.to(counterRef.current, {
-      val: value,
-      duration: 1.2,
-      ease: "power2.out",
-      onUpdate: () => {
-        setDisplayValue(Math.round(counterRef.current.val))
-      },
-    })
-  }, [value])
-
-  return <span>{formatter ? formatter(displayValue) : displayValue.toLocaleString()}</span>
-}
-
 export function KpiCard({
   title,
   value,
@@ -48,6 +25,9 @@ export function KpiCard({
   icon: Icon,
   formatter,
 }: KpiCardProps) {
+  const numberRef = useRef<HTMLSpanElement>(null)
+  useCountUp(numberRef, value, { prefix, suffix, duration: 1.5, formatCommas: true })
+
   return (
     <div className="p-6 rounded-3xl border border-border bg-card shadow-subtle hover:shadow-card transition-all duration-300 space-y-4">
       <div className="flex items-center justify-between">
@@ -61,9 +41,7 @@ export function KpiCard({
 
       <div className="space-y-1">
         <div className="font-display text-3xl font-bold text-foreground tracking-tight">
-          {prefix}
-          <AnimatedNumber value={value} formatter={formatter} />
-          {suffix}
+          <span ref={numberRef}>{prefix}{value.toLocaleString()}{suffix}</span>
         </div>
 
         <div className="flex items-center gap-1.5 text-xs">

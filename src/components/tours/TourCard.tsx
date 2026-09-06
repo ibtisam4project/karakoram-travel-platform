@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useState, useRef } from "react"
 import { Link } from "react-router-dom"
 import { Heart, Clock, Star, MapPin, Users, ArrowUpRight } from "lucide-react"
 import { Tour } from "@/types/database"
@@ -6,7 +6,7 @@ import { formatPKR } from "@/lib/utils"
 import { useWishlist } from "@/hooks/useWishlist"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
-import { useTiltCard } from "@/lib/gsap"
+import { useTiltCard, useMagneticButton } from "@/lib/animation"
 
 interface TourCardProps {
   tour: Tour
@@ -38,7 +38,10 @@ export const TourCard: React.FC<TourCardProps> = ({
 }) => {
   const { isWishlisted: hookIsWishlisted, toggleWishlist } = useWishlist()
   const [imageError, setImageError] = useState(false)
-  const cardRef = useTiltCard<HTMLDivElement>({ maxTilt: 5, perspective: 1000, scale: 1.015 })
+  const cardRef = useRef<HTMLDivElement>(null)
+  const buttonRef = useRef<HTMLButtonElement>(null)
+  useTiltCard(cardRef, { maxTilt: 6, perspective: 1000, scale: 1.02 })
+  useMagneticButton(buttonRef, { strength: 0.25, scale: 1.03 })
 
   const isSaved = propIsWishlisted !== undefined ? propIsWishlisted : hookIsWishlisted(tour.id)
 
@@ -189,6 +192,7 @@ export const TourCard: React.FC<TourCardProps> = ({
         <div className="pt-3 border-t border-border/60">
           <Link to={`/tours/${tour.slug}`} className="block">
             <Button
+              ref={buttonRef}
               variant="outline"
               size="sm"
               className="w-full rounded-xl justify-between group-hover:bg-editorial-navy group-hover:text-white dark:group-hover:bg-editorial-terracotta transition-all duration-300 font-medium text-xs h-10 px-4"

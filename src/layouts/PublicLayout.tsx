@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react"
+import anime from "animejs"
+import React, { useState, useEffect, useRef } from "react"
 import { Link, useLocation, Outlet } from "react-router-dom"
 import {
   Compass,
@@ -134,7 +135,20 @@ export function PublicLayout({ children }: { children?: React.ReactNode }) {
                 >
                   {link.label}
                   {isActive && (
-                    <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-editorial-terracotta rounded-full" />
+                    <span
+                      ref={(el) => {
+                        if (el) {
+                          anime({
+                            targets: el,
+                            scaleX: [0, 1],
+                            opacity: [0.3, 1],
+                            duration: 350,
+                            easing: "easeOutQuad",
+                          })
+                        }
+                      }}
+                      className="absolute bottom-0 left-0 right-0 h-0.5 bg-editorial-terracotta rounded-full origin-left"
+                    />
                   )}
                 </Link>
               )
