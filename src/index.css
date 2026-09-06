@@ -1,0 +1,85 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Soft Sand / Cream Editorial Light Theme */
+    --background: 34 33% 93%; /* #F4EDE4 converted to HSL */
+    --foreground: 200 45% 15%; /* Deep navy charcoal */
+
+    --card: 36 30% 96%;
+    --card-foreground: 200 45% 15%;
+
+    --popover: 36 30% 96%;
+    --popover-foreground: 200 45% 15%;
+
+    /* Deep Ocean Navy #0B3B4B -> 195 74% 17% */
+    --primary: 195 74% 17%;
+    --primary-foreground: 36 30% 96%;
+
+    /* Warm Terracotta Accent #E07A5F -> 13 69% 62% */
+    --secondary: 13 69% 62%;
+    --secondary-foreground: 0 0% 100%;
+
+    --muted: 35 20% 86%;
+    --muted-foreground: 195 20% 40%;
+
+    --accent: 13 69% 62%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 35 20% 82%;
+    --input: 35 20% 82%;
+    --ring: 195 74% 17%;
+
+    --radius: 0.75rem;
+  }
+
+  .dark {
+    /* Deep Midnight Navy Dark Theme */
+    --background: 197 50% 8%; /* #07171e */
+    --foreground: 36 30% 92%;
+
+    --card: 197 45% 12%; /* #0b222d */
+    --card-foreground: 36 30% 92%;
+
+    --popover: 197 45% 12%;
+    --popover-foreground: 36 30% 92%;
+
+    /* Rich Terracotta / Warm Copper in Dark Mode */
+    --primary: 13 69% 62%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 195 50% 22%;
+    --secondary-foreground: 36 30% 92%;
+
+    --muted: 197 35% 16%;
+    --muted-foreground: 195 15% 65%;
+
+    --accent: 13 69% 62%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 197 35% 18%;
+    --input: 197 35% 18%;
+    --ring: 13 69% 62%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground font-sans antialiased selection:bg-editorial-terracotta selection:text-white;
+    min-height: 100vh;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-serif tracking-tight;
+  }
+}

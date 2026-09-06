@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+  <!-- Background Circle / Rounded Box -->
+  <rect width="64" height="64" rx="16" fill="#0B3B4B"/>
+  
+  <!-- Back Mountain Range (Navy Tint / Sand) -->
+  <path d="M12 48L28 24L38 38L48 22L56 48H12Z" fill="#184E5F" opacity="0.8"/>
+  
+  <!-- Foreground Signature Karakoram Peak (Terracotta) -->
+  <path d="M22 48L34 16L46 48H22Z" fill="#E07A5F"/>
+  <path d="M34 16L46 48H34V16Z" fill="#C85A32"/>
+  
+  <!-- Snow Cap Highlight -->
+  <path d="M34 16L38 26L34 29L30 26L34 16Z" fill="#F4EDE4"/>
+  
+  <!-- Guiding Alpine Star (Gold) -->
+  <polygon points="34,6 35.8,11.5 41.5,11.5 36.9,14.8 38.6,20.3 34,17 29.4,20.3 31.1,14.8 26.5,11.5 32.2,11.5" fill="#DDA15E"/>
+</svg>
