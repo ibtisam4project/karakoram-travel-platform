@@ -68,6 +68,7 @@ module.exports = {
         "3xl": "1.5rem",
       },
       fontFamily: {
+        display: ["'Bricolage Grotesque'", "sans-serif"],
         serif: ["'Playfair Display'", "Georgia", "serif"],
         sans: ["'Plus Jakarta Sans'", "Inter", "sans-serif"],
       },

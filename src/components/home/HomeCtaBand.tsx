@@ -17,7 +17,7 @@ export function HomeCtaBand() {
             <span>Ready for Your Northern Adventure?</span>
           </div>
 
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-serif font-bold tracking-tight text-white leading-tight">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-display font-bold tracking-tight text-white leading-tight">
             Let Us Craft Your Unforgettable Journey.
           </h2>
 

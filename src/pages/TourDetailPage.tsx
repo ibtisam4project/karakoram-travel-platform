@@ -309,7 +309,7 @@ export function TourDetailPage() {
                 </span>
               </div>
 
-              <h1 className="text-3xl sm:text-5xl font-serif font-bold text-foreground tracking-tight leading-tight">
+              <h1 className="text-3xl sm:text-5xl font-display font-bold text-foreground tracking-tight leading-tight">
                 {tour.title}
               </h1>
             </div>
@@ -323,41 +323,41 @@ export function TourDetailPage() {
             {/* Key Facts Quick Bar */}
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 p-6 rounded-3xl bg-card border border-border/80 shadow-subtle">
               <div className="space-y-1">
-                <span className="text-[11px] font-bold uppercase tracking-wider text-muted-foreground flex items-center gap-1">
+                <span className="text-[11px] font-bold uppercase tracking-wider text-muted-foreground flex items-center gap-1 font-sans">
                   <Clock className="w-3.5 h-3.5 text-editorial-terracotta" />
                   Duration
                 </span>
-                <p className="font-serif text-lg font-bold text-foreground">
+                <p className="font-display text-lg font-bold text-foreground">
                   {tour.duration_days} Days / {tour.duration_days - 1} Nights
                 </p>
               </div>
 
               <div className="space-y-1">
-                <span className="text-[11px] font-bold uppercase tracking-wider text-muted-foreground flex items-center gap-1">
+                <span className="text-[11px] font-bold uppercase tracking-wider text-muted-foreground flex items-center gap-1 font-sans">
                   <Users className="w-3.5 h-3.5 text-editorial-terracotta" />
                   Max Group Size
                 </span>
-                <p className="font-serif text-lg font-bold text-foreground">
+                <p className="font-display text-lg font-bold text-foreground">
                   Up to {tour.group_size_max} Persons
                 </p>
               </div>
 
               <div className="space-y-1">
-                <span className="text-[11px] font-bold uppercase tracking-wider text-muted-foreground flex items-center gap-1">
+                <span className="text-[11px] font-bold uppercase tracking-wider text-muted-foreground flex items-center gap-1 font-sans">
                   <ShieldCheck className="w-3.5 h-3.5 text-editorial-terracotta" />
                   Guide Level
                 </span>
-                <p className="font-serif text-lg font-bold text-foreground">
+                <p className="font-display text-lg font-bold text-foreground">
                   Local Captain &amp; Cook
                 </p>
               </div>
 
               <div className="space-y-1">
-                <span className="text-[11px] font-bold uppercase tracking-wider text-muted-foreground flex items-center gap-1">
+                <span className="text-[11px] font-bold uppercase tracking-wider text-muted-foreground flex items-center gap-1 font-sans">
                   <Sparkles className="w-3.5 h-3.5 text-editorial-terracotta" />
                   Starting From
                 </span>
-                <p className="font-serif text-lg font-bold text-editorial-terracotta">
+                <p className="font-display text-lg font-bold text-editorial-terracotta">
                   {formatPKR(effectivePrice)}
                 </p>
               </div>

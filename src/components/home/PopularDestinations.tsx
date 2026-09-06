@@ -51,7 +51,7 @@ export function PopularDestinations() {
           <span className="text-xs uppercase tracking-widest text-editorial-terracotta font-semibold">
             Iconic Regions
           </span>
-          <h2 className="text-3xl sm:text-4xl font-serif font-bold text-foreground mt-1">
+          <h2 className="text-3xl sm:text-4xl font-display font-bold text-foreground mt-1">
             Popular Destinations
           </h2>
         </div>
@@ -86,7 +86,7 @@ export function PopularDestinations() {
             >
               <Link
                 to={`/tours?destination=${encodeURIComponent(dest.name)}`}
-                className="group relative block aspect-[4/3] rounded-3xl overflow-hidden shadow-subtle hover:shadow-card transition-all duration-500"
+                className="group relative block aspect-[4/3] rounded-3xl overflow-hidden shadow-subtle hover:shadow-floating transition-all duration-500 hover:-translate-y-1.5"
               >
                 {/* Background Destination Photo */}
                 <img
@@ -113,11 +113,11 @@ export function PopularDestinations() {
                     <span>{dest.name}</span>
                   </div>
 
-                  <h3 className="font-serif text-2xl font-bold tracking-tight group-hover:text-editorial-terracotta transition-colors">
+                  <h3 className="font-display text-2xl font-bold tracking-tight group-hover:text-editorial-terracotta transition-colors">
                     {dest.name}
                   </h3>
 
-                  <p className="text-xs text-editorial-sand/80 line-clamp-2 leading-relaxed pt-1">
+                  <p className="text-xs text-editorial-sand/80 line-clamp-2 leading-relaxed pt-1 font-sans">
                     {dest.description}
                   </p>
 

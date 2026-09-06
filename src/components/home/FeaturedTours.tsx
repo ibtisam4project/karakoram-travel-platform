@@ -48,7 +48,7 @@ export function FeaturedTours() {
               <Sparkles className="w-3.5 h-3.5" />
               <span>Handcrafted Expeditions</span>
             </div>
-            <h2 className="text-3xl sm:text-4xl font-serif font-bold text-foreground">
+            <h2 className="text-3xl sm:text-4xl font-display font-bold text-foreground">
               Featured Signature Journeys
             </h2>
           </div>

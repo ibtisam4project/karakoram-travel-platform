@@ -35,10 +35,10 @@ export function ValueProps() {
         <span className="text-xs uppercase tracking-widest text-editorial-terracotta font-semibold">
           The Karakoram Standard
         </span>
-        <h2 className="text-3xl sm:text-4xl font-serif font-bold text-foreground">
+        <h2 className="text-3xl sm:text-4xl font-display font-bold text-foreground">
           Why Discerning Travelers Choose Us
         </h2>
-        <p className="text-sm text-muted-foreground leading-relaxed">
+        <p className="text-sm text-muted-foreground leading-relaxed font-sans">
           We combine world-class expedition safety standards with the timeless warmth of authentic Pakistani hospitality.
         </p>
       </div>
@@ -47,12 +47,12 @@ export function ValueProps() {
         {props.map((p, idx) => (
           <div
             key={idx}
-            className="p-8 rounded-3xl border border-border/70 bg-card text-card-foreground shadow-subtle hover:shadow-card hover:-translate-y-1.5 transition-all duration-300 space-y-4"
+            className="p-8 rounded-3xl border border-border/70 bg-card text-card-foreground shadow-subtle hover:shadow-floating hover:-translate-y-1.5 transition-all duration-300 space-y-4"
           >
             <div className="w-14 h-14 rounded-2xl bg-editorial-sand/80 dark:bg-muted flex items-center justify-center border border-border/60">
               {p.icon}
             </div>
-            <h3 className="font-serif text-lg font-bold text-foreground leading-snug">
+            <h3 className="font-display text-lg font-bold text-foreground leading-snug">
               {p.title}
             </h3>
             <p className="text-xs text-muted-foreground leading-relaxed">

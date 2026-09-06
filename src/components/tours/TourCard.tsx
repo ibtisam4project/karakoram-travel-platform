@@ -1,12 +1,12 @@
 import React, { useState } from "react"
 import { Link } from "react-router-dom"
-import { motion } from "framer-motion"
 import { Heart, Clock, Star, MapPin, Users, ArrowUpRight } from "lucide-react"
 import { Tour } from "@/types/database"
 import { formatPKR } from "@/lib/utils"
 import { useWishlist } from "@/hooks/useWishlist"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
+import { useTiltCard } from "@/lib/gsap"
 
 interface TourCardProps {
   tour: Tour
@@ -24,11 +24,11 @@ interface TourCardProps {
  * - Admin previews
  *
  * Features:
- * - Micro-interaction hover lift via Framer Motion
+ * - Signature GSAP 3D tilt micro-interaction with quickTo() smooth interpolation
  * - Graceful image fallback
  * - Pakistani Rupee (PKR) price formatting with discount badge
  * - Wishlist heart toggle with interactive visual feedback
- * - Editorial serif typography and deep navy / terracotta accents
+ * - Bricolage Grotesque display typography and deep navy / terracotta accents
  */
 export const TourCard: React.FC<TourCardProps> = ({
   tour,
@@ -38,6 +38,7 @@ export const TourCard: React.FC<TourCardProps> = ({
 }) => {
   const { isWishlisted: hookIsWishlisted, toggleWishlist } = useWishlist()
   const [imageError, setImageError] = useState(false)
+  const cardRef = useTiltCard<HTMLDivElement>({ maxTilt: 5, perspective: 1000, scale: 1.015 })
 
   const isSaved = propIsWishlisted !== undefined ? propIsWishlisted : hookIsWishlisted(tour.id)
 
@@ -63,9 +64,9 @@ export const TourCard: React.FC<TourCardProps> = ({
     : 0
 
   return (
-    <motion.div
-      whileHover={{ y: -6, transition: { duration: 0.25, ease: "easeOut" } }}
-      className="group relative flex flex-col rounded-3xl overflow-hidden border border-border/80 bg-card text-card-foreground shadow-subtle hover:shadow-card transition-shadow duration-300 h-full"
+    <div
+      ref={cardRef}
+      className="group relative flex flex-col rounded-3xl overflow-hidden border border-border/80 bg-card text-card-foreground shadow-subtle hover:shadow-floating transition-shadow duration-300 h-full will-change-transform"
     >
       {/* Photo Container */}
       <div className="relative aspect-[16/10] overflow-hidden bg-muted">
@@ -171,15 +172,15 @@ export const TourCard: React.FC<TourCardProps> = ({
             </div>
           </div>
 
-          {/* Title */}
+          {/* Title with Bricolage Grotesque font */}
           <Link to={`/tours/${tour.slug}`} className="block group-hover:underline">
-            <h3 className="font-serif text-xl font-bold text-foreground leading-snug group-hover:text-editorial-terracotta transition-colors line-clamp-2">
+            <h3 className="font-display text-xl font-bold text-foreground leading-snug group-hover:text-editorial-terracotta transition-colors line-clamp-2">
               {tour.title}
             </h3>
           </Link>
 
           {/* Description Excerpt */}
-          <p className="text-xs text-muted-foreground line-clamp-2 leading-relaxed">
+          <p className="text-xs text-muted-foreground line-clamp-2 leading-relaxed font-sans">
             {tour.description}
           </p>
         </div>
@@ -198,6 +199,6 @@ export const TourCard: React.FC<TourCardProps> = ({
           </Link>
         </div>
       </div>
-    </motion.div>
+    </div>
   )
 }

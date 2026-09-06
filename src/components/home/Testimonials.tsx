@@ -103,10 +103,10 @@ export function Testimonials() {
           <span className="text-xs uppercase tracking-widest text-editorial-terracotta font-semibold">
             Traveler Chronicles
           </span>
-          <h2 className="text-3xl sm:text-4xl font-serif font-bold text-foreground">
+          <h2 className="text-3xl sm:text-4xl font-display font-bold text-foreground">
             Stories from the High Trails
           </h2>
-          <p className="text-sm text-muted-foreground leading-relaxed">
+          <p className="text-sm text-muted-foreground leading-relaxed font-sans">
             Read unedited feedback from Pakistani families, mountaineers, and honeymooners who traveled with us.
           </p>
         </div>

@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react"
-import { motion, useSpring, useTransform } from "framer-motion"
+import React, { useEffect, useRef, useState } from "react"
 import { TrendingUp, TrendingDown, LucideIcon } from "lucide-react"
+import { gsap, prefersReducedMotion } from "@/lib/gsap"
 
 interface KpiCardProps {
   title: string
@@ -15,16 +15,26 @@ interface KpiCardProps {
 }
 
 function AnimatedNumber({ value, formatter }: { value: number; formatter?: (val: number) => string }) {
-  const spring = useSpring(0, { mass: 0.8, stiffness: 75, damping: 15 })
-  const display = useTransform(spring, (current) =>
-    formatter ? formatter(Math.round(current)) : Math.round(current).toLocaleString()
-  )
+  const [displayValue, setDisplayValue] = useState(0)
+  const counterRef = useRef({ val: 0 })
 
   useEffect(() => {
-    spring.set(value)
-  }, [spring, value])
+    if (prefersReducedMotion()) {
+      setDisplayValue(value)
+      return
+    }
 
-  return <motion.span>{display}</motion.span>
+    gsap.to(counterRef.current, {
+      val: value,
+      duration: 1.2,
+      ease: "power2.out",
+      onUpdate: () => {
+        setDisplayValue(Math.round(counterRef.current.val))
+      },
+    })
+  }, [value])
+
+  return <span>{formatter ? formatter(displayValue) : displayValue.toLocaleString()}</span>
 }
 
 export function KpiCard({
@@ -50,7 +60,7 @@ export function KpiCard({
       </div>
 
       <div className="space-y-1">
-        <div className="font-serif text-3xl font-bold text-foreground tracking-tight">
+        <div className="font-display text-3xl font-bold text-foreground tracking-tight">
           {prefix}
           <AnimatedNumber value={value} formatter={formatter} />
           {suffix}

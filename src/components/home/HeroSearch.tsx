@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect, useRef } from "react"
 import { useNavigate } from "react-router-dom"
-import { motion } from "framer-motion"
 import { MapPin, Calendar, Users, Search, Sparkles, ShieldCheck } from "lucide-react"
 import { supabase } from "@/lib/supabaseClient"
 import { Destination } from "@/types/database"
 import { Button } from "@/components/ui/button"
+import { gsap, ScrollTrigger, prefersReducedMotion, useMagneticButton } from "@/lib/gsap"
 
 export function HeroSearch() {
   const navigate = useNavigate()
@@ -12,6 +12,14 @@ export function HeroSearch() {
   const [selectedDestination, setSelectedDestination] = useState<string>("")
   const [dateMonth, setDateMonth] = useState<string>("")
   const [travelers, setTravelers] = useState<string>("2")
+
+  const sectionRef = useRef<HTMLElement | null>(null)
+  const bgImageRef = useRef<HTMLImageElement | null>(null)
+  const pillRef = useRef<HTMLDivElement | null>(null)
+  const headlineRef = useRef<HTMLHeadingElement | null>(null)
+  const subtitleRef = useRef<HTMLParagraphElement | null>(null)
+  const searchBoxRef = useRef<HTMLDivElement | null>(null)
+  const searchButtonRef = useMagneticButton<HTMLButtonElement>(0.28)
 
   useEffect(() => {
     async function fetchDestinations() {
@@ -26,6 +34,46 @@ export function HeroSearch() {
     fetchDestinations()
   }, [])
 
+  // GSAP ScrollTrigger Parallax & Entrance Timeline
+  useEffect(() => {
+    if (prefersReducedMotion()) return
+
+    const ctx = gsap.context(() => {
+      // 1. Genuine ScrollTrigger-driven Parallax (background moves slower than foreground)
+      if (bgImageRef.current && sectionRef.current) {
+        gsap.to(bgImageRef.current, {
+          yPercent: 28,
+          scale: 1.15,
+          ease: "none",
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: "top top",
+            end: "bottom top",
+            scrub: true,
+          },
+        })
+      }
+
+      // 2. Staggered Entrance Reveal
+      const tl = gsap.timeline({ defaults: { ease: "power3.out" } })
+      
+      if (pillRef.current) {
+        tl.from(pillRef.current, { opacity: 0, y: -20, duration: 0.6 })
+      }
+      if (headlineRef.current) {
+        tl.from(headlineRef.current, { opacity: 0, y: 35, duration: 0.8 }, "-=0.3")
+      }
+      if (subtitleRef.current) {
+        tl.from(subtitleRef.current, { opacity: 0, y: 25, duration: 0.7 }, "-=0.4")
+      }
+      if (searchBoxRef.current) {
+        tl.from(searchBoxRef.current, { opacity: 0, y: 30, scale: 0.96, duration: 0.8 }, "-=0.4")
+      }
+    }, sectionRef)
+
+    return () => ctx.revert()
+  }, [])
+
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault()
     const params = new URLSearchParams()
@@ -36,13 +84,14 @@ export function HeroSearch() {
   }
 
   return (
-    <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden">
-      {/* 1. Full-Bleed Atmospheric Background Image with Gradient Mask */}
-      <div className="absolute inset-0 z-0">
+    <section ref={sectionRef} className="relative min-h-[92vh] flex items-center justify-center overflow-hidden">
+      {/* 1. Full-Bleed Atmospheric Background Image with GSAP Parallax */}
+      <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
         <img
+          ref={bgImageRef}
           src="/images/tours/k2_base_camp_trek_1788431873354.jpg"
           alt="Karakoram Mountains Expeditions"
-          className="w-full h-full object-cover object-center scale-105 animate-in fade-in duration-1000"
+          className="w-full h-[125%] object-cover object-center -translate-y-[10%]"
         />
         {/* Editorial Gradients: Darker bottom & top for navigation and text legibility */}
         <div className="absolute inset-0 bg-gradient-to-t from-background via-black/45 to-black/75" />
@@ -52,42 +101,34 @@ export function HeroSearch() {
       {/* 2. Hero Content Container */}
       <div className="container relative z-10 py-24 md:py-32 flex flex-col items-center text-center space-y-8 max-w-5xl">
         {/* Subtle Pill Tag */}
-        <motion.div
-          initial={{ opacity: 0, y: 15 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, ease: "easeOut" }}
-          className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white text-xs font-semibold tracking-wider uppercase shadow-subtle"
+        <div
+          ref={pillRef}
+          className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white text-xs font-semibold tracking-wider uppercase shadow-subtle font-sans"
         >
           <Sparkles className="w-3.5 h-3.5 text-editorial-gold" />
           <span>Curated Expeditions Across Pakistan &amp; Beyond</span>
-        </motion.div>
+        </div>
 
-        {/* Headline */}
-        <motion.h1
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.1, ease: "easeOut" }}
-          className="text-4xl sm:text-6xl md:text-7xl font-serif font-bold text-white tracking-tight leading-[1.1] max-w-4xl drop-shadow-md"
+        {/* Headline with Bricolage Grotesque display font */}
+        <h1
+          ref={headlineRef}
+          className="text-4xl sm:text-6xl md:text-7xl font-display font-bold text-white tracking-tight leading-[1.08] max-w-4xl drop-shadow-md"
         >
           Untamed Frontiers, <br />
-          <span className="italic font-normal text-editorial-sand">Unrivaled</span> Hospitality.
-        </motion.h1>
+          <span className="italic font-serif font-normal text-editorial-sand">Unrivaled</span> Hospitality.
+        </h1>
 
         {/* Subtitle */}
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.2, ease: "easeOut" }}
+        <p
+          ref={subtitleRef}
           className="text-base sm:text-lg md:text-xl text-editorial-sand/90 font-sans max-w-2xl leading-relaxed drop-shadow"
         >
           From the throne room of K2 and golden Hunza valleys to executive Umrah sanctuaries. Handcrafted boutique expeditions with all pricing in Pakistani Rupees.
-        </motion.p>
+        </p>
 
         {/* 3. Editorial Search Bar */}
-        <motion.div
-          initial={{ opacity: 0, y: 25 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.3, ease: "easeOut" }}
+        <div
+          ref={searchBoxRef}
           className="w-full max-w-4xl pt-4"
         >
           <form
@@ -151,12 +192,13 @@ export function HeroSearch() {
               </select>
             </div>
 
-            {/* Submit Button */}
+            {/* Submit Button with GSAP Magnetic Interaction */}
             <div className="flex items-center">
               <Button
+                ref={searchButtonRef}
                 type="submit"
                 variant="editorial"
-                className="w-full h-14 rounded-2xl font-bold tracking-wide text-sm gap-2 shadow-card hover:shadow-lg transition-all"
+                className="w-full h-14 rounded-2xl font-bold tracking-wide text-sm gap-2 shadow-card hover:shadow-lg transition-all active:scale-95"
               >
                 <Search className="w-4 h-4" />
                 <span>Find Expeditions</span>
@@ -165,7 +207,7 @@ export function HeroSearch() {
           </form>
 
           {/* Quick Badges beneath search bar */}
-          <div className="flex flex-wrap items-center justify-center gap-3 pt-4 text-xs text-white/80">
+          <div className="flex flex-wrap items-center justify-center gap-3 pt-4 text-xs text-white/80 font-sans">
             <span className="flex items-center gap-1">
               <ShieldCheck className="w-3.5 h-3.5 text-editorial-gold" />
               100% Guaranteed Departures
@@ -175,7 +217,7 @@ export function HeroSearch() {
             <span>&bull;</span>
             <span>Local Karakoram Guides</span>
           </div>
-        </motion.div>
+        </div>
       </div>
     </section>
   )
